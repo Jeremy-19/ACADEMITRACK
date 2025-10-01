@@ -1,0 +1,85 @@
+html,
+body {
+    height: 100%;
+    /* full viewport */
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    /* stack header, main, footer vertically */
+}
+
+main {
+    flex: 1;
+    /* pushes footer down when content is short */
+    margin: 0 10px;
+}
+
+hr {
+    /* remove default border */
+    border: none;
+    height: 2px;
+    /* thickness of the line */
+    background-color: rgba(128, 128, 128, 0.2);
+    /* 20% grey */
+    margin: 20px 0;
+}
+
+
+/* Content Container */
+.title-wrapper,
+.stats-container,
+.chart-container {
+    /*Set a definite content width*/
+    width: 91vw;
+    /*Restrict the content width*/
+    /* max-width: 1500px; */
+}
+
+.title-wrapper {
+    /*Center the content horizontally*/
+    margin: auto;
+}
+
+.stats-container {
+    display: flex;
+    justify-content: center;
+    /* centers the cards */
+    gap: 15px;
+    /* spacing between cards */
+    flex-wrap: wrap;
+    /* makes them wrap on small screens */
+    margin: 20px auto;
+    /* centers the whole row */
+    max-width: 1000px;
+    /* optional: keeps it from stretching too far */
+}
+
+.chart-container {
+    margin: auto;
+}
+
+.charts-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+@media (max-width: 768px) {
+    .charts-wrapper {
+        flex-direction: column;
+        /* stack vertically */
+        align-items: center;
+        /* center the charts */
+    }
+
+    .chart-container {
+        width: 100%;
+        /* take full width when stacked */
+    }
+}
