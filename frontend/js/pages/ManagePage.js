@@ -1,21 +1,9 @@
 import { StudentTable } from "../components/StudentTable.js";
 import { StudentForm } from "../components/StudentForm.js";
+import { SearchBar } from "../components/SearchBar.js";
 
 export function ManagePage() {
     const app = document.getElementById("app");
-
-    app.innerHTML = `
-        <h1>👩‍🎓 Manage Students</h1>
-        <div style="margin-bottom: 20px;">
-            <h2>Add New Student</h2>
-            <div id="student-form"></div>
-        </div>
-
-        <div>
-            <h2>Student List</h2>
-            <div id="student-table"></div>
-        </div>
-    `;
 
     // Example data (replace with API later)
     const students = [
@@ -23,8 +11,34 @@ export function ManagePage() {
         { id: 2, name: "Bob", grade: 88, attendance: "92%" },
         { id: 3, name: "Charlie", grade: 76, attendance: "85%" }
     ];
+    app.innerHTML = `
+        <div class="title-wrapper">
+            <h2>👩‍🎓 Manage Students</h2>
+            <hr></hr>
 
-    // Render components
-    document.getElementById("student-form").innerHTML = StudentForm();
-    document.getElementById("student-table").innerHTML = StudentTable(students);
+        <div class="charts-wrapper">
+            <!-- Search -->
+            <div>
+                <h2>🔍 Search Student</h2>
+                ${SearchBar()}
+            </div>
+            <!-- Add -->
+            <div>
+                <h2>➕ Add New Student</h2>
+                ${StudentForm()}
+            </div>
+        </div>
+
+
+
+
+
+            <!-- List -->
+            <div>
+            <h2>📋 Student List</h2>
+            ${StudentTable(students)}
+            <div id="student-table"></div>
+            </div>
+            </div>
+    `;
 }

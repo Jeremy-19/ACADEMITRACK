@@ -2,7 +2,16 @@
 let gradeChart;
 let attendanceChart;
 
-export function renderGradeChart(studentGrades) {
+export function renderGradeChart(chartGrades) {
+    if (!chartGrades || chartGrades.length === 0) {
+        console.warn("No chart data available");
+        return;
+    }
+
+    const labels = chartGrades.map(s => s.Name || s.name); // handle PHP naming (uppercase keys)
+    const grades = chartGrades.map(s => s.grade);
+
+    // ---- Grade Chart ----
     const gradeCtx = document.getElementById("gradeChart").getContext("2d");
 
     if (gradeChart) {
@@ -12,10 +21,10 @@ export function renderGradeChart(studentGrades) {
     gradeChart = new Chart(gradeCtx, {
         type: "bar",
         data: {
-            labels: studentGrades.map(s => s.name),
+            labels: labels,
             datasets: [{
-                label: "Grades",
-                data: studentGrades.map(s => s.grade),
+                label: "Average Grade",
+                data: grades,
                 backgroundColor: "rgba(54, 162, 235, 0.6)",
                 borderColor: "rgba(54, 162, 235, 1)",
                 borderWidth: 1
@@ -30,20 +39,24 @@ export function renderGradeChart(studentGrades) {
         }
     });
 
+    // ---- Attendance Chart (example using same labels) ----
     const attendanceCtx = document.getElementById("attendanceChart").getContext("2d");
     if (attendanceChart) {
-        attendanceChart.destroy(); // remove old chart
+        attendanceChart.destroy();
     }
+
     attendanceChart = new Chart(attendanceCtx, {
-        type: "bar",
+        type: "line", // different style for variety
         data: {
-            labels: studentGrades.map(s => s.name),
+            labels: labels,
             datasets: [{
-                label: "Grades",
-                data: studentGrades.map(s => s.grade),
-                backgroundColor: "rgba(54, 162, 235, 0.6)",
-                borderColor: "rgba(54, 162, 235, 1)",
-                borderWidth: 1
+                label: "Grades (line version)",
+                data: grades,
+                backgroundColor: "rgba(255, 99, 132, 0.2)",
+                borderColor: "rgba(255, 99, 132, 1)",
+                borderWidth: 2,
+                fill: true,
+                tension: 0.3
             }]
         },
         options: {

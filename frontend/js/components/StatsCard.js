@@ -1,6 +1,6 @@
-export function StatsCard(title, value) {
+export function StatsCard(title, value, id = "") {
     return `
-        <div style="
+         <div ${id ? `id="${id}"` : ""} style="
             border: 1px solid #ccc;
             border-radius: 8px;
             padding: 15px;

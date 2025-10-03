@@ -1,57 +1,62 @@
-// frontend/js/pages/DashboardPage.js
 import { StatsCard } from "../components/StatsCard.js";
 import { renderGradeChart } from "../components/Chart.js";
 
-export function DashboardPage() {
+export async function DashboardPage() {
     const app = document.getElementById("app");
 
-    // Example data (replace with API call later)
-    const currentTime = "12:00";
-    const totalStudents = 120;
-    const averageGrade = 88.5;
-    const attendanceRate = "95%";
-    const topPerformer = "Alice";
+    // Fetch data from your PHP API
+    let data;
+    try {
+        const res = await fetch('../backend/routes/api.php'); // adjust path if needed
+        data = await res.json();
+    } catch (err) {
+        console.error("Error fetching dashboard data:", err);
+        app.innerHTML = "<p>Error loading dashboard data.</p>";
+        return;
+    }
 
-    // Dummy grades for the chart
-    const dummyGrades = [
-        { name: "Alice", grade: 95 },
-        { name: "Bob", grade: 88 },
-        { name: "Charlie", grade: 76 },
-        { name: "Diana", grade: 92 }
-    ];
+    console.log(data); // optional: check API response
 
-    // <div style="display: flex; flex-wrap: wrap;">
-    // Render initial HTML including canvas
+    // Render dashboard HTML
     app.innerHTML = `
-        
         <div class="title-wrapper">
-            <h2>📊 Student Performance Dashboard</h2>
-            <hr></hr>
+            <h2>🖥️ Student Performance Dashboard</h2>
+            <hr />
         </div>
-        
-        <div class="stats-container">
-        ${StatsCard("Time", currentTime)}
-        ${StatsCard("Total Students", totalStudents)}
-        ${StatsCard("Average Grade", averageGrade)}
-        ${StatsCard("Attendance Rate", attendanceRate)}
-        ${StatsCard("Top Performer", topPerformer)}
+
+        <div class="stats-container" style="display:flex; gap:15px; flex-wrap:wrap;">
+            ${StatsCard("Time", new Date().toLocaleTimeString(), "time-card")}
+            ${StatsCard("Total Students", data.totalStudents)}
+            ${StatsCard("Average Grade", data.averageGrade)}
+            ${StatsCard("Attendance Rate", data.attendanceRate)}
+            ${StatsCard("Top Performer", data.topPerformer)}
         </div>
-        
+
         <div class="title-wrapper">
             <h2>📊 Visual Aid</h2>
-            <hr></hr>
+            <hr />
         </div>
 
-        <div class="charts-wrapper">
-            <div class="chart-container" style="flex: 1;">
-                <canvas id="gradeChart" style="height: 400px; width: 100%;"></canvas>
+        <div class="charts-wrapper" style="display:flex; gap:20px; flex-wrap:wrap;">
+            <div class="chart-container" style="flex:1; min-width:300px;">
+                <canvas id="gradeChart" style="height:400px; width:100%;"></canvas>
             </div>
-            <div class="chart-container" style="flex: 1;">
-                <canvas id="attendanceChart" style="height: 400px; width: 100%;"></canvas>
+            <div class="chart-container" style="flex:1; min-width:300px;">
+                <canvas id="attendanceChart" style="height:400px; width:100%;"></canvas>
             </div>
         </div>
     `;
 
-    // Now the canvas exists, render the chart
-    renderGradeChart(dummyGrades);
+    // Update the Time card every second
+    setInterval(() => {
+        const timeElem = document.querySelector("#time-card p");
+        if (timeElem) {
+            timeElem.textContent = new Date().toLocaleTimeString();
+        }
+    }, 1000);
+
+    // Render grade chart using API data
+    if (data.chartGrades) {
+        renderGradeChart(data.chartGrades);
+    }
 }
