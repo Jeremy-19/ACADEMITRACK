@@ -4,14 +4,14 @@ export function StudentForm() {
       #add-student-form {
         max-width: 150px;
         font-family: Arial, sans-serif;
-        }
-        
-        #add-student-form label {
-            display: block;
-            margin-bottom: 10px;
-        }
-            
-        #add-student-form input {
+      }
+      
+      #add-student-form label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      
+      #add-student-form input {
         max-width: 150px;
         width: 100%;
         padding: 0.5rem 0.8rem;
@@ -38,18 +38,46 @@ export function StudentForm() {
         Name:
         <input type="text" id="studentName" required>
       </label>
-
       <label>
         Grade:
-        <input type="number" id="studentGrade" min="0" max="100" required>
+        <input type="text" id="classGrade" pattern="[0-9]{1,2}[A-Z]" maxlength="50" required>
       </label>
-
       <label>
         Attendance:
         <input type="text" id="studentAttendance" placeholder="95%" required>
       </label>
-
       <button type="submit">Add Student</button>
     </form>
+
+<script>
+  document.getElementById("add-student-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const studentData = {
+      Name: document.getElementById("studentName").value,
+      Grade: document.getElementById("classGrade").value,
+      Attendance: document.getElementById("studentAttendance").value
+    };
+
+    // ✅ Log the form data to console
+    console.log("Submitting student data:", studentData);
+
+    try {
+      const res = await fetch("http://localhost/backend/routes/manage.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(studentData)
+      });
+
+      const data = await res.json();
+      console.log("API response:", data); // ✅ Log response too
+      alert(data.message || "Student added!");
+    } catch (error) {
+      console.error("Fetch error:", error); // ✅ Better error logging
+      alert("Error: " + error.message);
+    }
+  });
+</script>
+
   `;
 }

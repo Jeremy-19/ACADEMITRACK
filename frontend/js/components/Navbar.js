@@ -19,7 +19,7 @@ export function Navbar() {
       <div style="display: flex; gap: 1rem;">
         <a href="#dashboard" style="color: black; text-decoration: none;">Dashboard</a>
         <a href="#manage" style="color: black; text-decoration: none;">Manage</a>
-        <!--<a href="#reports" style="color: black; text-decoration: none;">Reports</a>-->
+        <a href="#reports" style="color: black; text-decoration: none;">Reports</a>
       </div>
     </nav>
   `;

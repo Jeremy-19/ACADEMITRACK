@@ -1,11 +1,12 @@
 export function StudentTable(students) {
     let rows = students.map(s => `
     <tr>
-      <td>${s.id}</td>
-      <td>${s.name}</td>
-      <td>${s.grade}</td>
-      <td>${s.attendance}</td>
-      <td>
+        <td>${s.id}</td>
+        <td>${s.name}</td>
+        <td>${s.grade}</td>
+        <td>${s.attendance}</td>
+        <td>
+        <button data-id="${s.id}" class="edit-btn">✏️ Edit</button>
         <button data-id="${s.id}" class="delete-btn">🗑️ Delete</button>
       </td>
     </tr>
@@ -33,7 +34,7 @@ export function StudentTable(students) {
         background-color: #f9f9f9;
       }
 
-      .delete-btn {
+      .edit-btn,.delete-btn {
         background: none;
         border: none;
         cursor: pointer;

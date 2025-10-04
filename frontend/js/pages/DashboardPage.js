@@ -7,7 +7,7 @@ export async function DashboardPage() {
     // Fetch data from your PHP API
     let data;
     try {
-        const res = await fetch('../backend/routes/api.php'); // adjust path if needed
+        const res = await fetch('../backend/routes/dashboard.php'); // adjust path if needed
         data = await res.json();
     } catch (err) {
         console.error("Error fetching dashboard data:", err);

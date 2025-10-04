@@ -8,7 +8,9 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 // Include config and routes
 require_once __DIR__ . '/config/Database.php';
-require_once __DIR__ . '/routes/api.php';
+// require_once __DIR__ . '/routes/api.php';
+require_once __DIR__ . '/routes/dashboard.php';
+require_once __DIR__ . '/routes/manage.php';
 
 // Get the request URI and method
 $requestUri = $_SERVER['REQUEST_URI'];
