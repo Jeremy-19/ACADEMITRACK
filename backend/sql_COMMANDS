@@ -1,0 +1,41 @@
+CREATE TABLE students (
+  StudentID INT AUTO_INCREMENT PRIMARY KEY,
+  Name VARCHAR(100) NOT NULL,
+  ClassGrade VARCHAR(10),
+  Attendance DECIMAL(5,2)
+);
+
+CREATE TABLE grades (
+  GradeID INT AUTO_INCREMENT PRIMARY KEY,
+  StudentID INT,
+  Subject VARCHAR(100),
+  Grade DECIMAL(5,2),
+  FOREIGN KEY (StudentID) REFERENCES students(StudentID)
+);
+
+
+INSERT INTO students (Name, ClassGrade, Attendance)
+VALUES
+('Alice Tan', '10A', 96.5),
+('Benjamin Lee', '10A', 88.0),
+('Chloe Wong', '10B', 92.3),
+('Daniel Lim', '10B', 85.7),
+('Evelyn Ng', '10C', 98.9);
+
+INSERT INTO grades (StudentID, Subject, Grade)
+VALUES
+(1, 'Mathematics', 90),
+(1, 'Science', 80),
+(1, 'English', 60),
+(2, 'Mathematics', 50),
+(2, 'Science', 70),
+(2, 'English', 85),
+(3, 'Mathematics', 65),
+(3, 'Science', 75),
+(3, 'English', 85),
+(4, 'Mathematics', 89),
+(4, 'Science', 65),
+(4, 'English', 45),
+(5, 'Mathematics', 80),
+(5, 'Science', 78),
+(5, 'English', 95);

@@ -4,33 +4,52 @@
 */
 
 
-// Import components & pages
+// frontend/js/main.js
+// frontend/js/app.js
 import { Navbar } from "./components/Navbar.js";
+import { Footer } from "./components/Footer.js";
 import { DashboardPage } from "./pages/DashboardPage.js";
 import { ManagePage } from "./pages/ManagePage.js";
-import { Footer } from "./components/Footer.js";
 
-// Simple router
+// ✅ Render navbar and footer ONCE
+document.getElementById("navbar").innerHTML = Navbar();
+document.getElementById("footer").innerHTML = Footer();
+
+// ✅ Router function
 function router() {
     const app = document.getElementById("app");
     const page = window.location.hash.replace("#", "") || "dashboard";
 
-    // Render Navbar
-    document.getElementById("navbar").innerHTML = Navbar();
+    switch (page) {
+        case "dashboard":
+            app.innerHTML = DashboardPage();
+            break;
 
-    // Render page based on hash
-    if (page === "dashboard") {
-        DashboardPage();
-    } else if (page === "manage") {
-        ManagePage();
-    } else {
-        app.innerHTML = `<h2>404 - Page Not Found</h2>`;
+        case "manage":
+            app.innerHTML = ManagePage();
+            break;
+
+        default:
+            app.innerHTML = `<h2 style="padding:2rem;">404 - Page Not Found</h2>`;
+            break;
     }
 
-    // Render Footer
-    document.getElementById("footer").innerHTML = Footer();
+    updateActiveLink();
 }
 
-// Listen for navigation changes
+// ✅ Update active navbar link
+function updateActiveLink() {
+    const page = window.location.hash.replace("#", "") || "dashboard";
+    document.querySelectorAll("nav a").forEach(link => {
+        const isActive = link.getAttribute("href") === `#${page}`;
+        link.style.fontWeight = isActive ? "bold" : "normal";
+        link.style.borderBottom = isActive ? "2px solid black" : "none";
+    });
+}
+
+// ✅ Run router when hash changes or page loads
 window.addEventListener("hashchange", router);
+window.addEventListener("hashchange", () => {
+    console.log("🔁 Hash changed to:", window.location.hash);
+});
 window.addEventListener("DOMContentLoaded", router);
