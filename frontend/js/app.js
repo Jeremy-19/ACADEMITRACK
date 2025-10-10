@@ -26,7 +26,14 @@ function router() {
             break;
 
         case "manage":
-            app.innerHTML = ManagePage();
+            (async () => {
+                const app = document.getElementById('app');
+                app.innerHTML = '<p>Loading student list...</p>'; // show loading message
+
+                const page = await ManagePage(); // wait for data + section
+                app.innerHTML = '';               // clear the loading message
+                app.appendChild(page);            // show final table
+            })();
             break;
 
         default:

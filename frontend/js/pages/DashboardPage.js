@@ -10,8 +10,8 @@ export async function DashboardPage() {
         const res = await fetch('../backend/routes/dashboard.php'); // adjust path if needed
         data = await res.json();
     } catch (err) {
-        console.error("Error fetching dashboard data:", err);
-        app.innerHTML = "<p>Error loading dashboard data.</p>";
+        console.error("Error fetching dashboard page data:", err);
+        app.innerHTML = "<p>Error loading dashboard page data.</p>";
         return;
     }
 
